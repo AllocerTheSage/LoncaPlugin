@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Minecraft server files
+run/
+logs/
+plugins/
+world/
+world_nether/
+world_the_end/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Sensitive files
+.env
+*.pem
+*.key

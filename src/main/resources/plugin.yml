@@ -1,0 +1,17 @@
+name: LoncaPlugin
+version: '1.0.0'
+main: com.berkan.lonca.bootstrap.LoncaPlugin
+api-version: '26.3'
+author: Berkan
+description: Minecraft lonca yönetim sistemi
+
+commands:
+  lonca:
+    description: Lonca sisteminin ana komutu
+    usage: /lonca
+
+  l:
+    description: Lonca sohbeti
+    usage: /l <mesaj>
+    libraries:
+      - org.xerial:sqlite-jdbc:3.54.1.0
