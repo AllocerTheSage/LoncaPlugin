@@ -22,16 +22,10 @@ public class GuildService {
                 && name.matches("[A-Za-z0-9 _.-]{4,16}");
     }
 
-    // Lonca TAG kurallarını kontrol eder.
-    private boolean isValidTag(String tag) {
-        return tag != null
-                && tag.matches("[A-Za-z0-9_]{2,6}");
-    }
 
     // Lonca oluşturma işlemini yönetir.
     public CompletableFuture<Guild> createGuild(
             String name,
-            String tag,
             UUID leaderUuid,
             GuildFounderRank founderRank
     ) {
@@ -39,15 +33,7 @@ public class GuildService {
         if (!isValidName(name)) {
             return CompletableFuture.failedFuture(
                     new IllegalArgumentException(
-                            "Lonca adi 4-16 karakter olmali ve sadece Ingilizce harf, rakam, bosluk, _, - ve . icereblir!"
-                    )
-            );
-        }
-
-        if (!isValidTag(tag)) {
-            return CompletableFuture.failedFuture(
-                    new IllegalArgumentException(
-                            "Lonca TAG'i 2-6 karakter olmali ve sadece Ingilizce harf, rakam ve _ icerebilir!"
+                            "Lonca adi 4-16 karakter olmali ve sadece Ingilizce harf, rakam, bosluk, _, - ve . icerebilir!"
                     )
             );
         }
@@ -81,23 +67,10 @@ public class GuildService {
                         );
                     }
 
-                    return guildRepository.existsByTag(tag);
-                })
-                .thenCompose(tagExists -> {
-
-                    if (tagExists) {
-                        return CompletableFuture.failedFuture(
-                                new IllegalStateException(
-                                        "Bu lonca TAG'i zaten kullaniliyor!"
-                                )
-                        );
-                    }
-
                     int capacity = founderRank.getStartingCapacity();
 
                     return guildRepository.create(
                             name,
-                            tag,
                             leaderUuid,
                             capacity
                     );

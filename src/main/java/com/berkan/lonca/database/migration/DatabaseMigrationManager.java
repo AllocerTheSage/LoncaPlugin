@@ -53,7 +53,7 @@ public class DatabaseMigrationManager {
                         CREATE TABLE guilds (
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             name TEXT NOT NULL COLLATE NOCASE UNIQUE,
-                            tag TEXT NOT NULL COLLATE NOCASE UNIQUE,
+                            tag TEXT COLLATE NOCASE UNIQUE,
                             level INTEGER NOT NULL DEFAULT 1,
                             xp INTEGER NOT NULL DEFAULT 0,
                             capacity INTEGER NOT NULL,

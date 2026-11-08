@@ -24,7 +24,6 @@ public class GuildRepository {
     // Yeni lonca oluşturur ve kurucuyu lider olarak kaydeder.
     public CompletableFuture<Guild> create(
             String name,
-            String tag,
             UUID leaderUuid,
             int capacity
     ) {
@@ -35,9 +34,9 @@ public class GuildRepository {
 
             try {
                 String sql = """
-                        INSERT INTO guilds (name, tag, capacity)
-                        VALUES (?, ?, ?)
-                        """;
+                    INSERT INTO guilds (name, capacity)
+                    VALUES (?, ?)
+                    """;
 
                 long guildId;
 
@@ -45,8 +44,7 @@ public class GuildRepository {
                              connection.prepareStatement(sql)) {
 
                     statement.setString(1, name);
-                    statement.setString(2, tag);
-                    statement.setInt(3, capacity);
+                    statement.setInt(2, capacity);
 
                     statement.executeUpdate();
                 }
@@ -67,10 +65,10 @@ public class GuildRepository {
 
                 // Kurucuyu loncaya lider olarak ekle.
                 String memberSql = """
-                        INSERT INTO guild_members
-                        (guild_id, player_uuid, rank)
-                        VALUES (?, ?, 'LEADER')
-                        """;
+                    INSERT INTO guild_members
+                    (guild_id, player_uuid, rank)
+                    VALUES (?, ?, 'LEADER')
+                    """;
 
                 try (PreparedStatement statement =
                              connection.prepareStatement(memberSql)) {
@@ -86,7 +84,7 @@ public class GuildRepository {
                 return new Guild(
                         guildId,
                         name,
-                        tag,
+                        null,
                         1,
                         0,
                         capacity,
